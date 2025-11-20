@@ -1,11 +1,11 @@
 [build]
-  base = "apps/web"
-  command = "pnpm run build"
-  publish = ".next"
-
-[[plugins]]
-  package = "@netlify/plugin-nextjs"
+  command = "pnpm install --frozen-lockfile && cd apps/web && pnpm run build"
+  publish = "apps/web/out"
 
 [build.environment]
   NODE_VERSION = "20"
-  NPM_FLAGS = "--legacy-peer-deps"
+
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
