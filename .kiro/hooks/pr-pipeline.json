@@ -1,0 +1,186 @@
+{
+  "name": "pr-pipeline",
+  "description": "Deterministic workflow for converting bug reports into PRs",
+  "version": "1.0",
+  "trigger": {
+    "type": "manual",
+    "event": "bug_report_submitted"
+  },
+  "steps": [
+    {
+      "id": "parse_bug",
+      "name": "Parse Bug Report",
+      "tool": "bug_parser",
+      "args": {
+        "input": "${bug_report_text}",
+        "output_format": "yaml",
+        "schema": ".kiro/specs/bug-spec.yaml"
+      },
+      "timeout": 30,
+      "on_failure": "abort"
+    },
+    {
+      "id": "search_code",
+      "name": "Locate Bug in Codebase",
+      "tool": "ripgrep",
+      "args": {
+        "query": "${bug_spec.target_functions}",
+        "path": "${bug_spec.repository}",
+        "context_lines": 5
+      },
+      "timeout": 15,
+      "on_failure": "retry_once"
+    },
+    {
+      "id": "create_branch",
+      "name": "Create Fix Branch",
+      "tool": "git",
+      "args": {
+        "command": "checkout",
+        "args": ["-b", "fix/${bug_spec.id}"],
+        "cwd": "${bug_spec.repository}"
+      },
+      "timeout": 10,
+      "on_failure": "abort"
+    },
+    {
+      "id": "generate_tests",
+      "name": "Generate Failing Tests",
+      "tool": "test_generator",
+      "args": {
+        "bug_spec": "${bug_spec}",
+        "target_file": "${search_code.result.file}",
+        "framework": "${bug_spec.test_requirements.framework}"
+      },
+      "timeout": 60,
+      "on_failure": "retry_twice"
+    },
+    {
+      "id": "run_tests_before",
+      "name": "Run Tests (Expect Failure)",
+      "tool": "test_runner",
+      "args": {
+        "framework": "${bug_spec.test_requirements.framework}",
+        "test_file": "${generate_tests.output_file}",
+        "cwd": "${bug_spec.repository}",
+        "expect_failure": true
+      },
+      "timeout": 120,
+      "on_failure": "abort"
+    },
+    {
+      "id": "generate_patch",
+      "name": "Generate Minimal Patch",
+      "tool": "patch_generator",
+      "args": {
+        "bug_spec": "${bug_spec}",
+        "failing_test": "${generate_tests.test_code}",
+        "target_file": "${search_code.result.file}",
+        "max_lines": "${bug_spec.safety_constraints.max_lines_changed}"
+      },
+      "timeout": 90,
+      "on_failure": "retry_twice"
+    },
+    {
+      "id": "validate_patch",
+      "name": "Validate Patch Safety",
+      "tool": "patch_validator",
+      "args": {
+        "patch": "${generate_patch.patch}",
+        "original_file": "${search_code.result.file}",
+        "constraints": "${bug_spec.safety_constraints}"
+      },
+      "timeout": 30,
+      "on_failure": "abort"
+    },
+    {
+      "id": "apply_patch",
+      "name": "Apply Patch",
+      "tool": "fs",
+      "args": {
+        "operation": "write",
+        "file": "${search_code.result.file}",
+        "content": "${generate_patch.patched_content}"
+      },
+      "timeout": 10,
+      "on_failure": "abort"
+    },
+    {
+      "id": "run_tests_after",
+      "name": "Run Tests (Expect Success)",
+      "tool": "test_runner",
+      "args": {
+        "framework": "${bug_spec.test_requirements.framework}",
+        "test_file": "all",
+        "cwd": "${bug_spec.repository}",
+        "expect_failure": false
+      },
+      "timeout": 120,
+      "on_failure": "rollback_and_retry"
+    },
+    {
+      "id": "lint_code",
+      "name": "Lint Fixed Code",
+      "tool": "linter",
+      "args": {
+        "language": "${bug_spec.language}",
+        "file": "${search_code.result.file}",
+        "auto_fix": true
+      },
+      "timeout": 30,
+      "on_failure": "warn"
+    },
+    {
+      "id": "commit_changes",
+      "name": "Commit Fix",
+      "tool": "git",
+      "args": {
+        "command": "commit",
+        "args": ["-am", "${commit_message}"],
+        "cwd": "${bug_spec.repository}"
+      },
+      "timeout": 10,
+      "on_failure": "abort"
+    },
+    {
+      "id": "open_pr",
+      "name": "Open Pull Request",
+      "tool": "github",
+      "args": {
+        "operation": "create_pr",
+        "title": "fix: ${bug_spec.title}",
+        "body": "${pr_description}",
+        "head": "fix/${bug_spec.id}",
+        "base": "main",
+        "repository": "${bug_spec.repository}"
+      },
+      "timeout": 30,
+      "on_failure": "warn"
+    }
+  ],
+  "rollback": {
+    "on_failure": [
+      {
+        "tool": "git",
+        "args": {
+          "command": "reset",
+          "args": ["--hard", "HEAD"],
+          "cwd": "${bug_spec.repository}"
+        }
+      },
+      {
+        "tool": "git",
+        "args": {
+          "command": "checkout",
+          "args": ["main"],
+          "cwd": "${bug_spec.repository}"
+        }
+      }
+    ]
+  },
+  "rate_limits": {
+    "max_retries_per_step": 2,
+    "max_total_time": 600,
+    "max_concurrent_runs": 3
+  }
+}

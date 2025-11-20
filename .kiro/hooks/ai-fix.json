@@ -1,0 +1,27 @@
+{
+  "name": "AI-Powered Bug Fix",
+  "description": "Use Kiro AI to intelligently fix bugs that pattern matching can't handle",
+  "trigger": "manual",
+  "steps": [
+    {
+      "name": "analyze_bug",
+      "prompt": "Analyze this bug and suggest a minimal fix:\n\nFile: {{file}}\nLine: {{line}}\nBug: {{description}}\n\nCode context:\n{{code}}\n\nProvide only the fixed code, no explanations.",
+      "timeout": 30000
+    },
+    {
+      "name": "apply_fix",
+      "action": "write_file",
+      "file": "{{file}}",
+      "content": "{{analyze_bug.output}}"
+    },
+    {
+      "name": "verify",
+      "action": "run_tests",
+      "test_command": "npm test"
+    }
+  ],
+  "on_failure": {
+    "action": "rollback",
+    "notify": true
+  }
+}

@@ -1,0 +1,90 @@
+@import url('https://fonts.googleapis.com/css2?family=Nosifer&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Ensure content stays above background video */
+body > *:not(.fixed) {
+  position: relative;
+  z-index: 1;
+}
+
+/* Spooky animations */
+@keyframes heartbeat {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+}
+
+@keyframes drip {
+  0% { transform: translateY(-10px); opacity: 0; }
+  50% { opacity: 1; }
+  100% { transform: translateY(0); opacity: 1; }
+}
+
+@keyframes glowPulse {
+  0%, 100% { box-shadow: 0 0 5px #E8DCC4, 0 0 10px #E8DCC4; }
+  50% { box-shadow: 0 0 20px #E8DCC4, 0 0 30px #E8DCC4, 0 0 40px #E8DCC4; }
+}
+
+@keyframes bloodSplatter {
+  0% { transform: scale(0) rotate(0deg); opacity: 0; }
+  50% { opacity: 1; }
+  100% { transform: scale(1) rotate(360deg); opacity: 0.8; }
+}
+
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  25% { transform: translateX(-2px) rotate(-1deg); }
+  75% { transform: translateX(2px) rotate(1deg); }
+}
+
+@keyframes glitch {
+  0% { transform: translate(0); }
+  20% { transform: translate(-2px, 2px); }
+  40% { transform: translate(-2px, -2px); }
+  60% { transform: translate(2px, 2px); }
+  80% { transform: translate(2px, -2px); }
+  100% { transform: translate(0); }
+}
+
+/* Spooky button styles */
+.spooky-button {
+  animation: heartbeat 2s ease-in-out infinite;
+  transition: all 0.3s ease;
+}
+
+.spooky-button:hover {
+  animation: shake 0.3s ease-in-out;
+  box-shadow: 0 0 20px #A52A2A, 0 0 30px #A52A2A;
+}
+
+.success-glow {
+  animation: glowPulse 1.5s ease-in-out infinite;
+}
+
+.error-splatter {
+  animation: bloodSplatter 0.5s ease-out;
+}
+
+.glitch-text {
+  animation: glitch 0.3s ease-in-out;
+}
+
+/* Scrollbar styling */
+::-webkit-scrollbar {
+  width: 12px;
+}
+
+::-webkit-scrollbar-track {
+  background: #1a0a0a;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #A52A2A;
+  border-radius: 6px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #A52A2A;
+}

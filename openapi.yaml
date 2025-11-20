@@ -1,0 +1,129 @@
+openapi: 3.0.0
+info:
+  title: BugReaper API
+  version: 1.0.0
+  description: API for automated bug fixing pipeline
+
+servers:
+  - url: http://localhost:3003
+    description: Local development server
+
+paths:
+  /api/run:
+    post:
+      summary: Submit a bug report and start the pipeline
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - title
+                - description
+                - repository
+              properties:
+                title:
+                  type: string
+                  example: "Calculator divide by zero crashes app"
+                description:
+                  type: string
+                  example: "When calling calculator.divide(10, 0), the app throws an unhandled exception"
+                repository:
+                  type: string
+                  example: "toy/ts-repo"
+                expectedBehavior:
+                  type: string
+                  example: "Should return { error: 'Division by zero' }"
+      responses:
+        '200':
+          description: Pipeline started successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  runId:
+                    type: string
+                  status:
+                    type: string
+                  message:
+                    type: string
+
+  /api/run/{id}:
+    get:
+      summary: Get pipeline status and timeline
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Pipeline status
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: string
+                  status:
+                    type: string
+                  currentStep:
+                    type: string
+                  events:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        step:
+                          type: string
+                        status:
+                          type: string
+                        message:
+                          type: string
+                        timestamp:
+                          type: string
+                  pullRequest:
+                    type: object
+                    properties:
+                      prNumber:
+                        type: integer
+                      prUrl:
+                        type: string
+                      status:
+                        type: string
+
+  /api/connect-repo:
+    post:
+      summary: Connect a real GitHub repository
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - owner
+                - repo
+              properties:
+                owner:
+                  type: string
+                repo:
+                  type: string
+                installationId:
+                  type: integer
+      responses:
+        '200':
+          description: Repository connected
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                  message:
+                    type: string

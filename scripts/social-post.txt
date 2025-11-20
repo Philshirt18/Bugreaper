@@ -1,0 +1,32 @@
+🧟‍♂️ Introducing BugReaper - Resurrect Dead Code
+
+Turn bug reports into tests, patches, and PRs automatically.
+
+Built with Kiro's autonomous agent features:
+✅ Spec-driven development
+✅ Agent hooks for deterministic workflows
+✅ MCP tools with safety constraints
+✅ Steering docs for code style
+✅ Test-first minimal patches
+
+Features:
+- Natural language bug reports → structured specs
+- Generate failing tests before fixes
+- Create minimal, safe patches
+- Auto-open PRs with full context
+- Local CI simulator for demos
+
+Tech stack:
+- TypeScript + Python
+- Next.js + Prisma
+- Vitest + pytest
+- Mock GitHub API
+
+Try it:
+git clone https://github.com/sample-org/BugReaper
+cd BugReaper
+make setup && make smoke
+
+MIT licensed. Contributions welcome!
+
+#AI #Automation #DevTools #Kiro #OpenSource

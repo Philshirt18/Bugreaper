@@ -1,0 +1,199 @@
+# BugReaper Bug Specification Schema
+# This spec defines the structure for converting bug reports into actionable test-and-fix pipelines.
+# Kiro's spec-driven development uses this to guide autonomous agents through the repair process.
+
+schema:
+  version: "1.0"
+  description: "Structured bug report for test generation and minimal patch creation"
+  
+  fields:
+    id:
+      type: string
+      required: true
+      description: "Unique identifier for this bug (UUID or slug)"
+    
+    title:
+      type: string
+      required: true
+      description: "Short, descriptive bug title"
+    
+    repository:
+      type: string
+      required: true
+      description: "Target repository path (e.g., toy/ts-repo)"
+    
+    language:
+      type: enum
+      values: [typescript, python, javascript, go, rust]
+      required: true
+    
+    severity:
+      type: enum
+      values: [critical, high, medium, low]
+      default: medium
+    
+    description:
+      type: string
+      required: true
+      description: "Detailed bug description with reproduction steps"
+    
+    expected_behavior:
+      type: string
+      required: true
+      description: "What should happen instead"
+    
+    target_files:
+      type: array
+      items: string
+      description: "Files likely containing the bug (can be inferred)"
+    
+    target_functions:
+      type: array
+      items: string
+      description: "Specific functions or methods to fix"
+    
+    acceptance_criteria:
+      type: array
+      items: string
+      required: true
+      description: "Conditions that must be met for the fix to be accepted"
+    
+    test_requirements:
+      type: object
+      properties:
+        framework:
+          type: string
+          description: "Test framework (vitest, jest, pytest, etc.)"
+        coverage_threshold:
+          type: number
+          default: 80
+        must_fail_before_fix:
+          type: boolean
+          default: true
+    
+    safety_constraints:
+      type: object
+      properties:
+        max_lines_changed:
+          type: number
+          default: 50
+          description: "Maximum lines that can be modified"
+        no_breaking_changes:
+          type: boolean
+          default: true
+        preserve_api:
+          type: boolean
+          default: true
+    
+    metadata:
+      type: object
+      properties:
+        reporter:
+          type: string
+        reported_at:
+          type: datetime
+        priority:
+          type: number
+        tags:
+          type: array
+          items: string
+
+# Example 1: TypeScript Division by Zero Bug
+examples:
+  - id: "bug-ts-001"
+    title: "Calculator divide by zero crashes app"
+    repository: "toy/ts-repo"
+    language: typescript
+    severity: high
+    description: |
+      When calling calculator.divide(10, 0), the application throws an unhandled exception
+      and crashes instead of gracefully handling the error. This happens in production
+      and causes user-facing errors.
+      
+      Reproduction:
+      1. Import calculator from src/calculator.ts
+      2. Call calculator.divide(10, 0)
+      3. Observe unhandled exception
+    
+    expected_behavior: |
+      The divide function should detect division by zero and return an error object:
+      { success: false, error: "Division by zero is not allowed" }
+      
+      The function should never throw an exception for this case.
+    
+    target_files:
+      - "src/calculator.ts"
+    
+    target_functions:
+      - "divide"
+    
+    acceptance_criteria:
+      - "divide(10, 0) returns an error object, not throws"
+      - "divide(10, 2) still returns { success: true, result: 5 }"
+      - "All existing calculator tests pass"
+      - "New test covers the zero-division case"
+    
+    test_requirements:
+      framework: "vitest"
+      coverage_threshold: 90
+      must_fail_before_fix: true
+    
+    safety_constraints:
+      max_lines_changed: 10
+      no_breaking_changes: true
+      preserve_api: true
+    
+    metadata:
+      reporter: "user@example.com"
+      reported_at: "2025-11-07T10:30:00Z"
+      priority: 8
+      tags: ["calculator", "error-handling", "edge-case"]
+
+  - id: "bug-py-002"
+    title: "Factorial function fails on negative numbers"
+    repository: "toy/py-repo"
+    language: python
+    severity: medium
+    description: |
+      The factorial function in math_utils.py does not handle negative input correctly.
+      It enters an infinite loop when given a negative number, causing the process to hang.
+      
+      Reproduction:
+      1. from src.math_utils import factorial
+      2. factorial(-5)
+      3. Process hangs indefinitely
+    
+    expected_behavior: |
+      The factorial function should raise a ValueError with a clear message:
+      "Factorial is not defined for negative numbers"
+      
+      This matches mathematical convention and prevents hangs.
+    
+    target_files:
+      - "src/math_utils.py"
+    
+    target_functions:
+      - "factorial"
+    
+    acceptance_criteria:
+      - "factorial(-5) raises ValueError with appropriate message"
+      - "factorial(0) returns 1"
+      - "factorial(5) returns 120"
+      - "All existing math_utils tests pass"
+      - "New test covers negative input case"
+    
+    test_requirements:
+      framework: "pytest"
+      coverage_threshold: 85
+      must_fail_before_fix: true
+    
+    safety_constraints:
+      max_lines_changed: 8
+      no_breaking_changes: true
+      preserve_api: false
+    
+    metadata:
+      reporter: "dev@example.com"
+      reported_at: "2025-11-07T14:15:00Z"
+      priority: 6
+      tags: ["math", "validation", "infinite-loop"]

@@ -1,0 +1,39 @@
+version: '3.8'
+
+services:
+  web:
+    build:
+      context: .
+      dockerfile: apps/web/Dockerfile
+    ports:
+      - "3003:3003"
+    environment:
+      - DATABASE_URL=file:./dev.db
+      - MOCK_MODE=true
+    volumes:
+      - ./apps/web:/app/apps/web
+      - ./prisma:/app/prisma
+    depends_on:
+      - worker
+
+  worker:
+    build:
+      context: .
+      dockerfile: workers/node/Dockerfile
+    ports:
+      - "3001:3001"
+    environment:
+      - DATABASE_URL=file:./dev.db
+      - MOCK_MODE=true
+    volumes:
+      - ./workers/node:/app/workers/node
+      - ./toy:/app/toy
+
+  mock-gh:
+    build:
+      context: .
+      dockerfile: mocks/mock-gh/Dockerfile
+    ports:
+      - "3002:3002"
+    volumes:
+      - ./mocks/mock-gh:/app/mocks/mock-gh

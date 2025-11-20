@@ -1,0 +1,24 @@
+{
+  "repositories": [
+    {
+      "name": "TypeScript Calculator",
+      "path": "toy/ts-repo",
+      "language": "typescript",
+      "enabled": true
+    },
+    {
+      "name": "Python Math Utils",
+      "path": "toy/py-repo",
+      "language": "python",
+      "enabled": true
+    },
+    {
+      "name": "Notes Calculator",
+      "path": "toy/Notes app",
+      "language": "javascript",
+      "enabled": true
+    }
+  ],
+  "autoDiscoverSymlinks": true,
+  "symlinkDirectory": "toy"
+}

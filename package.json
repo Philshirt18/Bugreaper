@@ -1,0 +1,29 @@
+{
+  "name": "bugreaper",
+  "version": "1.0.0",
+  "description": "Turn bug reports into tests, patches, and PRs",
+  "private": true,
+  "scripts": {
+    "dev": "make dev",
+    "test": "make test",
+    "setup": "make setup",
+    "smoke": "make smoke"
+  },
+  "keywords": [
+    "bug-fixing",
+    "automation",
+    "ai",
+    "kiro"
+  ],
+  "author": "sample-org",
+  "license": "MIT",
+  "devDependencies": {
+    "@prisma/client": "^6.19.0",
+    "@typescript-eslint/eslint-plugin": "^6.0.0",
+    "@typescript-eslint/parser": "^6.0.0",
+    "eslint": "^8.0.0",
+    "prettier": "^3.0.0",
+    "prisma": "^6.19.0",
+    "typescript": "^5.0.0"
+  }
+}

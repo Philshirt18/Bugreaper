@@ -1,0 +1,52 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - uses: actions/checkout@v3
+      
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+      
+      - name: Setup Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.9'
+      
+      - name: Install pnpm
+        uses: pnpm/action-setup@v2
+        with:
+          version: 8
+      
+      - name: Install dependencies
+        run: pnpm install
+      
+      - name: Generate Prisma client
+        run: pnpm prisma generate
+      
+      - name: Run TypeScript tests
+        run: pnpm --filter toy-ts test
+      
+      - name: Run Python tests
+        run: |
+          cd toy/py-repo
+          pip install -r requirements.txt
+          pytest
+      
+      - name: Lint
+        run: |
+          pnpm eslint .
+          pnpm prettier --check .
+      
+      - name: Smoke test
+        run: make smoke

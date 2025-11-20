@@ -1,0 +1,221 @@
+{
+  "version": "1.0",
+  "description": "MCP tool definitions for BugReaper autonomous bug fixing",
+  "tools": [
+    {
+      "name": "git",
+      "type": "mcp",
+      "description": "Git operations with safety constraints",
+      "operations": [
+        "clone",
+        "checkout",
+        "branch",
+        "commit",
+        "push",
+        "status",
+        "diff",
+        "log"
+      ],
+      "safety": {
+        "allowed_commands": [
+          "git clone",
+          "git checkout -b",
+          "git branch",
+          "git commit -am",
+          "git push origin",
+          "git status",
+          "git diff",
+          "git log"
+        ],
+        "forbidden_commands": [
+          "git push --force",
+          "git reset --hard origin",
+          "git clean -fd"
+        ],
+        "sandbox": true,
+        "rate_limit": {
+          "max_calls_per_minute": 30,
+          "max_calls_per_hour": 500
+        }
+      }
+    },
+    {
+      "name": "github",
+      "type": "mcp",
+      "description": "GitHub API operations for PR management",
+      "operations": [
+        "create_pr",
+        "update_pr",
+        "get_pr_status",
+        "add_comment",
+        "request_review"
+      ],
+      "safety": {
+        "require_approval": false,
+        "mock_mode": true,
+        "rate_limit": {
+          "max_calls_per_minute": 10,
+          "max_calls_per_hour": 100
+        }
+      },
+      "config": {
+        "mock_endpoint": "http://localhost:3002",
+        "real_endpoint": "https://api.github.com"
+      }
+    },
+    {
+      "name": "ripgrep",
+      "type": "mcp",
+      "description": "Fast code search for bug location",
+      "operations": [
+        "search",
+        "search_files"
+      ],
+      "safety": {
+        "max_results": 100,
+        "timeout_seconds": 30,
+        "allowed_paths": [
+          "toy/ts-repo",
+          "toy/py-repo"
+        ],
+        "rate_limit": {
+          "max_calls_per_minute": 60
+        }
+      }
+    },
+    {
+      "name": "eslint",
+      "type": "mcp",
+      "description": "JavaScript/TypeScript linting",
+      "operations": [
+        "lint",
+        "fix"
+      ],
+      "safety": {
+        "auto_fix": true,
+        "max_fixes": 50,
+        "timeout_seconds": 60
+      }
+    },
+    {
+      "name": "prettier",
+      "type": "mcp",
+      "description": "Code formatting",
+      "operations": [
+        "format"
+      ],
+      "safety": {
+        "auto_fix": true,
+        "timeout_seconds": 30
+      }
+    },
+    {
+      "name": "pytest",
+      "type": "mcp",
+      "description": "Python test runner",
+      "operations": [
+        "run",
+        "run_file",
+        "run_function"
+      ],
+      "safety": {
+        "timeout_seconds": 120,
+        "max_parallel": 4,
+        "sandbox": true,
+        "rate_limit": {
+          "max_calls_per_minute": 20
+        }
+      }
+    },
+    {
+      "name": "npm",
+      "type": "mcp",
+      "description": "Node package manager and test runner",
+      "operations": [
+        "test",
+        "install",
+        "run"
+      ],
+      "safety": {
+        "allowed_scripts": [
+          "test",
+          "test:unit",
+          "lint",
+          "format"
+        ],
+        "forbidden_scripts": [
+          "postinstall",
+          "preinstall"
+        ],
+        "timeout_seconds": 180,
+        "rate_limit": {
+          "max_calls_per_minute": 10
+        }
+      }
+    },
+    {
+      "name": "fs",
+      "type": "mcp",
+      "description": "Sandboxed file system operations",
+      "operations": [
+        "read",
+        "write",
+        "list",
+        "exists"
+      ],
+      "safety": {
+        "allowed_paths": [
+          "toy/ts-repo",
+          "toy/py-repo",
+          "apps/web",
+          "workers"
+        ],
+        "forbidden_paths": [
+          ".env",
+          ".git",
+          "node_modules",
+          ".kiro/mcp"
+        ],
+        "max_file_size_mb": 10,
+        "rate_limit": {
+          "max_calls_per_minute": 100
+        }
+      }
+    },
+    {
+      "name": "shell",
+      "type": "mcp",
+      "description": "Sandboxed shell command execution",
+      "operations": [
+        "exec"
+      ],
+      "safety": {
+        "allowed_commands": [
+          "ls",
+          "cat",
+          "echo",
+          "pwd",
+          "which"
+        ],
+        "forbidden_commands": [
+          "rm -rf",
+          "sudo",
+          "curl",
+          "wget",
+          "chmod +x"
+        ],
+        "timeout_seconds": 30,
+        "sandbox": true,
+        "rate_limit": {
+          "max_calls_per_minute": 20
+        }
+      }
+    }
+  ],
+  "global_settings": {
+    "enable_logging": true,
+    "log_level": "info",
+    "retry_on_rate_limit": true,
+    "max_retries": 3
+  }
+}

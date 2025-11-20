@@ -1,0 +1,43 @@
+╔══════════════════════════════════════════════════════════════╗
+║                                                              ║
+║   📋 COPY THIS BUG REPORT INTO NECROMERGE                    ║
+║                                                              ║
+╚══════════════════════════════════════════════════════════════╝
+
+Title:
+Calculator crashes when pressing equals button
+
+Repository:
+Notes app (HTML/JavaScript)
+
+Description:
+When I press the equals button on the calculator, the app crashes with an error. The evaluateExpression function throws an error instead of calculating the result. This happens every time I try to calculate anything.
+
+Expected Behavior:
+Should evaluate the mathematical expression and display the result without crashing
+
+╔══════════════════════════════════════════════════════════════╗
+║                                                              ║
+║   🎯 WHAT TO DO NOW:                                         ║
+║                                                              ║
+╚══════════════════════════════════════════════════════════════╝
+
+1. Open: http://localhost:3003
+
+2. Copy the text above into the form
+
+3. Click "Start Pipeline"
+
+4. Wait 10 seconds
+
+5. Check the worker logs to see the real processing:
+   - It will find index.html
+   - Generate a fix for evaluateExpression
+   - Show you the corrected code
+
+6. The UI might show cached data, but check the terminal 
+   where the worker is running to see the REAL output!
+
+╔══════════════════════════════════════════════════════════════╗
+║  The worker terminal shows the REAL fix! 🎯                  ║
+╚══════════════════════════════════════════════════════════════╝

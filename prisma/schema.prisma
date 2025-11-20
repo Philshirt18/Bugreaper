@@ -1,0 +1,82 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model BugReport {
+  id          String   @id @default(uuid())
+  title       String
+  description String
+  repository  String
+  language    String
+  severity    String
+  status      String   @default("pending")
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  spec        BugSpec?
+  runs        PipelineRun[]
+}
+
+model BugSpec {
+  id                String   @id @default(uuid())
+  bugReportId       String   @unique
+  bugReport         BugReport @relation(fields: [bugReportId], references: [id])
+  
+  targetFiles       String
+  targetFunctions   String
+  expectedBehavior  String
+  acceptanceCriteria String
+  testRequirements  String
+  safetyConstraints String
+  
+  createdAt         DateTime @default(now())
+}
+
+model PipelineRun {
+  id            String   @id @default(uuid())
+  bugReportId   String
+  bugReport     BugReport @relation(fields: [bugReportId], references: [id])
+  
+  status        String   @default("running")
+  currentStep   String?
+  
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+  completedAt   DateTime?
+  
+  events        TimelineEvent[]
+  pullRequest   PullRequest?
+}
+
+model TimelineEvent {
+  id            String   @id @default(uuid())
+  pipelineRunId String
+  pipelineRun   PipelineRun @relation(fields: [pipelineRunId], references: [id])
+  
+  step          String
+  status        String
+  message       String?
+  data          String?
+  
+  createdAt     DateTime @default(now())
+}
+
+model PullRequest {
+  id            String   @id @default(uuid())
+  pipelineRunId String   @unique
+  pipelineRun   PipelineRun @relation(fields: [pipelineRunId], references: [id])
+  
+  prNumber      Int?
+  prUrl         String?
+  title         String
+  body          String
+  status        String   @default("open")
+  
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+}

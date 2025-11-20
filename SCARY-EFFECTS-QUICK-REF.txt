@@ -1,0 +1,85 @@
+╔══════════════════════════════════════════════════════════════════════════════╗
+║                                                                              ║
+║                     👻 BUGREAPER SCARY EFFECTS 👻                            ║
+║                                                                              ║
+║                    Visit: http://localhost:3003/ai-demo                      ║
+║                                                                              ║
+╚══════════════════════════════════════════════════════════════════════════════╝
+
+🩸 BLOOD DRIP SPLASH SCREEN
+   • 20 animated blood drips
+   • Glowing "BugReaper" text
+   • 4.5 second duration
+   • Shows on page load
+
+👁️  CREEPY EYES
+   • Follow your cursor
+   • Blink every 3-7 seconds
+   • Red glowing effect
+   • Always watching...
+
+📺 GLITCH EFFECT
+   • Random screen flickers
+   • Every 5-15 seconds
+   • Brief red distortion
+   • Lasts 100-300ms
+
+👻 FLOATING GHOSTS
+   • 3 ghosts drifting
+   • Wave motion
+   • Semi-transparent
+   • Continuous loop
+
+💥 CRACKING SCREEN
+   • Click anywhere to crack
+   • Red crack lines
+   • Shatters after 5 clicks
+   • Interactive!
+
+🌑 SHADOW FIGURES
+   • Appear at screen edges
+   • Fade in/out over 3s
+   • Every 8-15 seconds
+   • Peripheral horror
+
+🌫️  FOG EFFECT
+   • Creeping from bottom
+   • Red-tinted mist
+   • Swirls and moves
+   • Continuous
+
+⚡ LIGHTNING FLASHES
+   • Random strikes
+   • Every 15-35 seconds
+   • Multiple quick flashes
+   • Unpredictable
+
+🕷️  CRAWLING SPIDERS
+   • Spawn from edges
+   • Crawl across screen
+   • Click to squash!
+   • Every 8-15 seconds
+
+╔══════════════════════════════════════════════════════════════════════════════╗
+║                                                                              ║
+║  INTERACTIVE FEATURES:                                                       ║
+║  • Move mouse → Eyes follow                                                  ║
+║  • Click screen → Creates cracks                                             ║
+║  • Click spiders → Squash them                                               ║
+║                                                                              ║
+╚══════════════════════════════════════════════════════════════════════════════╝
+
+🎯 QUICK TEST:
+   1. Visit http://localhost:3003/ai-demo
+   2. Watch blood drip splash (4.5s)
+   3. Move your mouse around
+   4. Click to create cracks
+   5. Wait for random scares!
+
+🔧 CUSTOMIZE:
+   Edit apps/web/app/ai-demo/page.tsx
+   Set any effect to false to disable
+
+💀 SPOOKINESS LEVEL: ★★★★★ (5/5 skulls)
+
+Happy haunting! 🎃👻💀
