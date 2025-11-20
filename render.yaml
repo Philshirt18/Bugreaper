@@ -1,0 +1,13 @@
+services:
+  - type: web
+    name: bugreaper
+    env: node
+    region: oregon
+    plan: free
+    buildCommand: pnpm install --frozen-lockfile && cd apps/web && pnpm run build
+    startCommand: cd apps/web && pnpm start
+    envVars:
+      - key: NODE_VERSION
+        value: 20
+      - key: PORT
+        value: 3003
