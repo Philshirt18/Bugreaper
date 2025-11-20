@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "Turn bug reports into tests, patches, and PRs",
   "private": true,
-  "packageManager": "pnpm@9.0.0",
+  "packageManager": "pnpm@9.14.4",
   "scripts": {
     "dev": "make dev",
     "test": "make test",
