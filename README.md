@@ -92,7 +92,7 @@ npm run dev
 
 ---
 
-## � Usacge
+## � Usage
 
 ### Quick Start: Demo Mode (Recommended for First-Time Users)
 
