@@ -4,7 +4,23 @@ export const dynamic = 'force-dynamic';
 
 export async function POST(request: Request) {
   try {
-    const { issueId, projectPath, file, description, expected } = await request.json();
+    const body = await request.json();
+    
+    // Demo mode: handle code analysis requests
+    if (body.code && body.language) {
+      const { code, bugDescription, language } = body;
+      
+      return NextResponse.json({
+        success: true,
+        fixedCode: code,
+        explanation: 'Demo mode: AI analysis is not available without the worker service. This is a placeholder response.',
+        changes: [],
+        message: 'To enable AI features, you need to deploy the worker service separately and configure the API endpoint.'
+      });
+    }
+    
+    // Worker mode: handle fix requests
+    const { issueId, projectPath, file, description, expected } = body;
 
     if (!issueId || !projectPath || !file) {
       return NextResponse.json(
