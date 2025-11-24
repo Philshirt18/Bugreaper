@@ -314,6 +314,6 @@ Ironically, if you find a bug in BugReaper, please:
 
 ---
 
-**Made with 💀 and AI**
+**Made with Kiro**
 
-*Reaping bugs since 2024*
+*Reaping bugs since 2025*
