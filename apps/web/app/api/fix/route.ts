@@ -13,9 +13,9 @@ export async function POST(request: Request) {
       return NextResponse.json({
         success: true,
         fixedCode: code,
-        explanation: 'Demo mode: AI analysis is not available without the worker service. This is a placeholder response.',
+        explanation: 'This is a demo version. To see the full power of BugReaper with AI-powered bug detection and fixes, check out the video demo or follow the setup instructions in the README to enable all features.',
         changes: [],
-        message: 'To enable AI features, you need to deploy the worker service separately and configure the API endpoint.'
+        message: 'Demo mode active - full AI features require additional setup.'
       });
     }
     
