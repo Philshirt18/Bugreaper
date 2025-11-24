@@ -4,7 +4,7 @@
 
 BugReaper is an AI-powered debugging assistant that finds and fixes bugs in seconds, not hours. Built for the Kiro AI Hackathon with a spooky Halloween theme.
 
-![BugReaper Demo](https://img.shields.io/badge/Status-Live-success)
+[![Live Demo](https://img.shields.io/badge/Demo-Live-success?style=for-the-badge)](https://bugreaper.onrender.com/ai-demo)
 ![License](https://img.shields.io/badge/License-MIT-blue)
 ![AI](https://img.shields.io/badge/AI-Gemini-purple)
 
@@ -28,39 +28,26 @@ BugReaper is an AI-powered debugging assistant that finds and fixes bugs in seco
 - **Code Review**: Instant code quality feedback
 - **Real-time Stats**: Gamified bug tracking dashboard
 
-## 🏆 For Hackathon Judges - 5-Minute Setup
+## 🏆 For Hackathon Judges - Try It Now!
 
-### Option 1: Quick Demo (No API Key Needed - 2 Minutes)
+### 🚀 Live Demo (0 Minutes - Just Click!)
 
-Want to see BugReaper in action immediately? Use **Demo Mode**:
+**No installation required!** Try BugReaper instantly:
 
-```bash
-# 1. Clone and install
-git clone https://github.com/yourusername/bugreaper.git
-cd bugreaper
-npm install
+👉 **[https://bugreaper.onrender.com/ai-demo](https://bugreaper.onrender.com/ai-demo)** 👈
 
-# 2. Start backend (Terminal 1)
-cd workers/node && npm run dev
+**What you can do:**
+1. Explore the spooky interface
+2. Click **"Try Demo"** to load sample buggy code
+3. Click **"Reap Bug"** to see the AI analysis interface
+4. Check out the **Bug Graveyard** (skull icon, bottom-left)
+5. Try the undo/redo timeline and export features
 
-# 3. Start frontend (Terminal 2 - new terminal)
-cd apps/web && npm run dev
-
-# 4. Open browser
-# Go to: http://localhost:3003
-```
-
-**Then in the app:**
-1. Click **"Try Demo"** button (green button at top)
-2. Select any demo project (e.g., "Todo App")
-3. Click **"Reap Bug"** to see AI fix bugs instantly
-4. Watch the **Bug Graveyard** (skull icon, bottom-left) track your stats!
-
-**No API key needed for Demo Mode!** ✨
+**Note:** The live demo shows the interface. For full AI-powered bug fixing, follow the local setup below.
 
 ---
 
-### Option 2: Full Setup with Your Own Code (5 Minutes)
+### 💻 Local Setup with Full AI Features (5 Minutes)
 
 To use BugReaper with your own projects and unlock all AI features:
 
@@ -138,6 +125,8 @@ npm run dev
 Open your browser to: **http://localhost:3003**
 
 The app will auto-redirect to `/ai-demo` where all the magic happens!
+
+**Or try the live demo:** [https://bugreaper.onrender.com/ai-demo](https://bugreaper.onrender.com/ai-demo)
 
 ## 📖 Usage
 
