@@ -36,24 +36,47 @@ export default function FeatureBoxes() {
         <div
           key={index}
           style={{
-            background: activeBox === index 
-              ? `linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url(${images[index]})`
-              : 'rgba(50, 50, 50, 0.6)',
-            backgroundSize: 'cover',
-            backgroundPosition: 'center',
+            position: 'relative',
+            overflow: 'hidden',
             border: '1px solid rgba(200, 200, 200, 0.2)',
             boxShadow: '0 4px 20px rgba(0, 0, 0, 0.5)',
             backdropFilter: 'blur(10px)',
-            transition: 'all 0.5s ease-in-out'
+            minHeight: '120px'
           }}
           className="rounded-lg p-6 text-center"
         >
-          <h3 className="font-bold mb-1" style={{ color: '#d4d4d4', fontFamily: 'Georgia, serif' }}>
-            {feature.title}
-          </h3>
-          <p className="text-sm" style={{ color: '#a0a0a0' }}>
-            {feature.description}
-          </p>
+          {/* Background layer */}
+          <div
+            style={{
+              position: 'absolute',
+              inset: 0,
+              backgroundImage: activeBox === index ? `url(${images[index]})` : 'none',
+              backgroundSize: 'cover',
+              backgroundPosition: 'center',
+              opacity: activeBox === index ? 1 : 0,
+              transition: 'opacity 0.5s ease-in-out',
+              zIndex: 0
+            }}
+          />
+          {/* Dark overlay */}
+          <div
+            style={{
+              position: 'absolute',
+              inset: 0,
+              background: activeBox === index ? 'rgba(0, 0, 0, 0.6)' : 'rgba(50, 50, 50, 0.6)',
+              transition: 'background 0.5s ease-in-out',
+              zIndex: 1
+            }}
+          />
+          {/* Content */}
+          <div style={{ position: 'relative', zIndex: 2 }}>
+            <h3 className="font-bold mb-1" style={{ color: '#d4d4d4', fontFamily: 'Georgia, serif' }}>
+              {feature.title}
+            </h3>
+            <p className="text-sm" style={{ color: '#a0a0a0' }}>
+              {feature.description}
+            </p>
+          </div>
         </div>
       ))}
     </div>
