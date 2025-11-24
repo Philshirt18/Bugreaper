@@ -22,22 +22,10 @@ export default function FeatureBoxes() {
   useEffect(() => {
     let currentIndex = 0;
     
-    const showImage = () => {
+    const interval = setInterval(() => {
       setActiveBox(currentIndex);
-      
-      // Hide image after 0.5 seconds
-      setTimeout(() => {
-        setActiveBox(null);
-      }, 500);
-      
       currentIndex = (currentIndex + 1) % features.length;
-    };
-    
-    // Show first image immediately
-    showImage();
-    
-    // Then repeat every 10 seconds
-    const interval = setInterval(showImage, 10000);
+    }, 10000); // 10 seconds
 
     return () => clearInterval(interval);
   }, []);
