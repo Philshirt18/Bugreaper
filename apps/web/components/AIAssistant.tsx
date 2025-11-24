@@ -21,12 +21,8 @@ export default function AIAssistant({ code, language, filePath, onFixApplied, on
   const [saving, setSaving] = useState(false);
 
   const handleAnalyzeAndFix = async () => {
-    // Check for API key
-    const apiKey = localStorage.getItem('gemini_api_key');
-    if (!apiKey) {
-      setError('Please set your Gemini API key in settings (click the key icon in bottom right)');
-      return;
-    }
+    // Get API key (optional for demo mode)
+    const apiKey = localStorage.getItem('gemini_api_key') || '';
 
     setLoading(true);
     setError(null);
@@ -59,11 +55,7 @@ export default function AIAssistant({ code, language, filePath, onFixApplied, on
   };
 
   const handleExplain = async () => {
-    const apiKey = localStorage.getItem('gemini_api_key');
-    if (!apiKey) {
-      setError('Please set your Gemini API key in settings');
-      return;
-    }
+    const apiKey = localStorage.getItem('gemini_api_key') || '';
 
     setLoading(true);
     setError(null);
@@ -93,11 +85,7 @@ export default function AIAssistant({ code, language, filePath, onFixApplied, on
   };
 
   const handleGenerateTests = async () => {
-    const apiKey = localStorage.getItem('gemini_api_key');
-    if (!apiKey) {
-      setError('Please set your Gemini API key in settings');
-      return;
-    }
+    const apiKey = localStorage.getItem('gemini_api_key') || '';
 
     if (!bugDescription.trim()) {
       setError('Please describe what to test');
@@ -132,11 +120,7 @@ export default function AIAssistant({ code, language, filePath, onFixApplied, on
   };
 
   const handleReview = async () => {
-    const apiKey = localStorage.getItem('gemini_api_key');
-    if (!apiKey) {
-      setError('Please set your Gemini API key in settings');
-      return;
-    }
+    const apiKey = localStorage.getItem('gemini_api_key') || '';
 
     setLoading(true);
     setError(null);
