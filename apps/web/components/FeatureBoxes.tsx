@@ -41,7 +41,7 @@ export default function FeatureBoxes() {
               backgroundImage: `url(${images[index]})`,
               backgroundSize: 'cover',
               backgroundPosition: 'center',
-              opacity: 0.9,
+              opacity: 0.7,
               zIndex: 0
             }}
           />
