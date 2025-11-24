@@ -10,25 +10,13 @@ const features = [
 ];
 
 const images = [
-  '/images/boxes/pexels-ivan-siarbolin-1513699-3695795.jpg',
-  '/images/boxes/pexels-juan-c-palacios-1823512-3585607.jpg',
-  '/images/boxes/pexels-pedro-figueras-202443-626164.jpg',
-  '/images/boxes/pexels-smetovisuals-6036202.jpg'
+  '/images/boxes/pexels-andres-cadena-251119993-14425618.jpg',
+  '/images/boxes/pexels-desertedinurban-4462784.jpg',
+  '/images/boxes/pexels-gerardo-manzano-251119164-14148284.jpg',
+  '/images/boxes/pexels-pedro-figueras-202443-626164.jpg'
 ];
 
 export default function FeatureBoxes() {
-  const [activeBox, setActiveBox] = useState<number | null>(null);
-
-  useEffect(() => {
-    let currentIndex = 0;
-    
-    const interval = setInterval(() => {
-      setActiveBox(currentIndex);
-      currentIndex = (currentIndex + 1) % features.length;
-    }, 10000); // 10 seconds
-
-    return () => clearInterval(interval);
-  }, []);
 
   return (
     <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-8">
@@ -50,11 +38,10 @@ export default function FeatureBoxes() {
             style={{
               position: 'absolute',
               inset: 0,
-              backgroundImage: activeBox === index ? `url(${images[index]})` : 'none',
+              backgroundImage: `url(${images[index]})`,
               backgroundSize: 'cover',
               backgroundPosition: 'center',
-              opacity: activeBox === index ? 1 : 0,
-              transition: 'opacity 0.5s ease-in-out',
+              opacity: 0.9,
               zIndex: 0
             }}
           />
@@ -63,8 +50,7 @@ export default function FeatureBoxes() {
             style={{
               position: 'absolute',
               inset: 0,
-              background: activeBox === index ? 'rgba(0, 0, 0, 0.6)' : 'rgba(50, 50, 50, 0.6)',
-              transition: 'background 0.5s ease-in-out',
+              background: 'rgba(0, 0, 0, 0.5)',
               zIndex: 1
             }}
           />
