@@ -92,43 +92,7 @@ npm run dev
 
 ---
 
-## 🚀 Quick Start (For Regular Users)
-
-### Prerequisites
-- Node.js 18+ and npm
-- A free Gemini API key ([Get one here](https://makersuite.google.com/app/apikey))
-
-### Installation
-
-```bash
-# Clone the repository
-git clone https://github.com/yourusername/bugreaper.git
-cd bugreaper
-
-# Install dependencies
-npm install
-
-# Set up environment variables
-cd workers/node
-cp .env.example .env
-# Edit .env and add your GEMINI_API_KEY
-
-# Start the backend (Terminal 1)
-npm run dev
-
-# Start the frontend (Terminal 2)
-cd ../../apps/web
-npm run dev
-```
-
-### Access the App
-Open your browser to: **http://localhost:3003**
-
-The app will auto-redirect to `/ai-demo` where all the magic happens!
-
-**Or try the live demo:** [https://bugreaper.onrender.com/ai-demo](https://bugreaper.onrender.com/ai-demo)
-
-## 📖 Usage
+## � Usacge
 
 ### Quick Start: Demo Mode (Recommended for First-Time Users)
 
