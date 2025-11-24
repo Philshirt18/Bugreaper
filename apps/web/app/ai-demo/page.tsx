@@ -10,6 +10,7 @@ import BugGraveyard from '../../components/BugGraveyard';
 import DemoMode from '../../components/DemoMode';
 import UndoRedoStack from '../../components/UndoRedoStack';
 import ExportReport from '../../components/ExportReport';
+import FeatureBoxes from '../../components/FeatureBoxes';
 import { Skull, Zap, Brain, Ghost, FolderOpen, Search, Plus } from 'lucide-react';
 
 interface Repository {
@@ -358,44 +359,7 @@ export default function AIDemoPage() {
         </div>
 
         {/* Features Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-8">
-          <div style={{
-            background: 'rgba(50, 50, 50, 0.6)',
-            border: '1px solid rgba(200, 200, 200, 0.2)',
-            boxShadow: '0 4px 20px rgba(0, 0, 0, 0.5)',
-            backdropFilter: 'blur(10px)'
-          }} className="rounded-lg p-6 text-center">
-            <h3 className="font-bold mb-1" style={{ color: '#d4d4d4', fontFamily: 'Georgia, serif' }}>Death to Bugs</h3>
-            <p className="text-sm" style={{ color: '#a0a0a0' }}>AI reaps complex bugs instantly</p>
-          </div>
-          <div style={{
-            background: 'rgba(50, 50, 50, 0.6)',
-            border: '1px solid rgba(200, 200, 200, 0.2)',
-            boxShadow: '0 4px 20px rgba(0, 0, 0, 0.5)',
-            backdropFilter: 'blur(10px)'
-          }} className="rounded-lg p-6 text-center">
-            <h3 className="font-bold mb-1" style={{ color: '#d4d4d4', fontFamily: 'Georgia, serif' }}>Undead Review</h3>
-            <p className="text-sm" style={{ color: '#a0a0a0' }}>Resurrect code quality</p>
-          </div>
-          <div style={{
-            background: 'rgba(50, 50, 50, 0.6)',
-            border: '1px solid rgba(200, 200, 200, 0.2)',
-            boxShadow: '0 4px 20px rgba(0, 0, 0, 0.5)',
-            backdropFilter: 'blur(10px)'
-          }} className="rounded-lg p-6 text-center">
-            <h3 className="font-bold mb-1" style={{ color: '#d4d4d4', fontFamily: 'Georgia, serif' }}>Tomb Tests</h3>
-            <p className="text-sm" style={{ color: '#a0a0a0' }}>Summon comprehensive tests</p>
-          </div>
-          <div style={{
-            background: 'rgba(50, 50, 50, 0.6)',
-            border: '1px solid rgba(200, 200, 200, 0.2)',
-            boxShadow: '0 4px 20px rgba(0, 0, 0, 0.5)',
-            backdropFilter: 'blur(10px)'
-          }} className="rounded-lg p-6 text-center">
-            <h3 className="font-bold mb-1" style={{ color: '#d4d4d4', fontFamily: 'Georgia, serif' }}>Ghostly Wisdom</h3>
-            <p className="text-sm" style={{ color: '#a0a0a0' }}>Decode cursed code</p>
-          </div>
-        </div>
+        <FeatureBoxes />
 
         {/* Project Selector */}
         <div className="mb-8 bg-white/10 backdrop-blur-sm rounded-lg p-6">
