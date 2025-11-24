@@ -35,7 +35,7 @@ export default function AIAssistant({ code, language, filePath, onFixApplied, on
       // If no description provided, use auto-detect mode
       const description = bugDescription.trim() || 'Analyze this code and find any bugs, issues, or improvements needed. Fix them automatically.';
       
-      const response = await fetch('http://localhost:3001/ai/analyze-and-fix', {
+      const response = await fetch('/api/fix', {
         method: 'POST',
         headers: { 
           'Content-Type': 'application/json',
@@ -69,7 +69,7 @@ export default function AIAssistant({ code, language, filePath, onFixApplied, on
     setError(null);
     
     try {
-      const response = await fetch('http://localhost:3001/ai/explain', {
+      const response = await fetch('/api/fix', {
         method: 'POST',
         headers: { 
           'Content-Type': 'application/json',
@@ -108,7 +108,7 @@ export default function AIAssistant({ code, language, filePath, onFixApplied, on
     setError(null);
     
     try {
-      const response = await fetch('http://localhost:3001/ai/generate-tests', {
+      const response = await fetch('/api/fix', {
         method: 'POST',
         headers: { 
           'Content-Type': 'application/json',
@@ -142,7 +142,7 @@ export default function AIAssistant({ code, language, filePath, onFixApplied, on
     setError(null);
     
     try {
-      const response = await fetch('http://localhost:3001/ai/review', {
+      const response = await fetch('/api/fix', {
         method: 'POST',
         headers: { 
           'Content-Type': 'application/json',

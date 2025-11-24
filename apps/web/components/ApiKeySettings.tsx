@@ -36,7 +36,7 @@ export default function ApiKeySettings() {
     setTestResult(null);
 
     try {
-      const response = await fetch('http://localhost:3001/ai/test-key', {
+      const response = await fetch('/api/fix', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ apiKey: apiKey.trim() })

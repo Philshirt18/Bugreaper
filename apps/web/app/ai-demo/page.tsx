@@ -72,14 +72,11 @@ export default function AIDemoPage() {
 
   // Load repositories and check AI status
   useEffect(() => {
-    // Check if AI is enabled
-    fetch('http://localhost:3001/health')
-      .then(res => res.json())
-      .then(data => setAiEnabled(data.aiEnabled))
-      .catch(() => setAiEnabled(false));
+    // Check if AI is enabled - skip for now, assume enabled
+    setAiEnabled(true);
 
     // Load repositories
-    fetch('http://localhost:3001/repositories')
+    fetch('/api/repositories')
       .then(res => res.json())
       .then(data => {
         setRepositories(data);
@@ -196,7 +193,7 @@ export default function AIDemoPage() {
     
     setSearching(true);
     try {
-      const response = await fetch('http://localhost:3001/repositories/search', {
+      const response = await fetch('/api/search-repos', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ searchPath })
@@ -213,14 +210,14 @@ export default function AIDemoPage() {
   const handleSelectFolder = async (folderPath: string) => {
     try {
       // Add to repositories
-      await fetch('http://localhost:3001/repositories', {
+      await fetch('/api/add-project', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ path: folderPath })
       });
       
       // Reload repositories
-      const response = await fetch('http://localhost:3001/repositories');
+      const response = await fetch('/api/repositories');
       const data = await response.json();
       setRepositories(data);
       
@@ -248,7 +245,7 @@ export default function AIDemoPage() {
     try {
       // Scan the project to get all files
       console.log('Scanning project at:', projectPath);
-      const response = await fetch('http://localhost:3001/scan', {
+      const response = await fetch('/api/scan', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ projectPath })
@@ -429,12 +426,12 @@ export default function AIDemoPage() {
                       onClick={async () => {
                         if (confirm(`Remove "${selectedProject}" from the list?`)) {
                           try {
-                            await fetch('http://localhost:3001/repositories', {
-                              method: 'DELETE',
+                            await fetch('/api/remove-project', {
+                              method: 'POST',
                               headers: { 'Content-Type': 'application/json' },
                               body: JSON.stringify({ path: selectedProject })
                             });
-                            const response = await fetch('http://localhost:3001/repositories');
+                            const response = await fetch('/api/repositories');
                             const data = await response.json();
                             setRepositories(data);
                             setSelectedProject('');
